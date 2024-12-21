@@ -70,10 +70,19 @@ function drawCell(x, y, alive) {
 }
 
 /**
- * @description Count the number of alive neighbors for a cell
- * @param {number} x - X coordinate
- * @param {number} y - Y coordinate
- * @returns {number} Number of alive neighbors
+ * Counts the number of live neighbors for a cell at the given coordinates in Conway's Game of Life.
+ * Uses a toroidal grid (wrapping around edges) to check all 8 surrounding cells.
+ * 
+ * @param {number} x - The row coordinate of the cell
+ * @param {number} y - The column coordinate of the cell
+ * @returns {number} The count of live neighboring cells (0-8)
+ * 
+ * @example
+ * // For a cell at (1,1), checks the following positions:
+ * // [0,0] [0,1] [0,2]
+ * // [1,0] [1,1] [1,2]
+ * // [2,0] [2,1] [2,2]
+ * // (excluding the center cell itself)
  */
 function countNeighbors(x, y) {
     let count = 0;
