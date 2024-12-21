@@ -5,57 +5,76 @@ const ctx = canvas.getContext('2d');
 // Game state variables
 let isRunning = false;
 let grid = [];
-const cellSize = 10;
-const colors = {
-    dead: getComputedStyle(document.documentElement).getPropertyValue('--cell-dead-color').trim(),
-    level1: getComputedStyle(document.documentElement).getPropertyValue('--cell-level1-color').trim(),
-    level2: getComputedStyle(document.documentElement).getPropertyValue('--cell-level2-color').trim(),
-    level3: getComputedStyle(document.documentElement).getPropertyValue('--cell-level3-color').trim(),
-    level4: getComputedStyle(document.documentElement).getPropertyValue('--cell-level4-color').trim()
+const CELL_SIZE = 10;
+const COLORS = {
+    DEAD: getComputedStyle(document.documentElement).getPropertyValue('--cell-dead-color').trim(),
+    LEVEL1: getComputedStyle(document.documentElement).getPropertyValue('--cell-level1-color').trim(),
+    LEVEL2: getComputedStyle(document.documentElement).getPropertyValue('--cell-level2-color').trim(),
+    LEVEL3: getComputedStyle(document.documentElement).getPropertyValue('--cell-level3-color').trim(),
+    LEVEL4: getComputedStyle(document.documentElement).getPropertyValue('--cell-level4-color').trim()
 };
 let lastUpdate = 0;
 
-// Initialize canvas size and grid
+/**
+ * @description Resize the canvas and initialize the grid
+ */
 function resizeCanvas() {
     canvas.width = window.innerWidth - 20;
     canvas.height = window.innerHeight - 20;
     initGrid();
 }
 
-// Initialize grid with random cells
+/**
+ * @description Initialize the grid with random cells
+ */
 function initGrid() {
-    const cols = Math.floor(canvas.width / cellSize);
-    const rows = Math.floor(canvas.height / cellSize);
+    const cols = Math.floor(canvas.width / CELL_SIZE);
+    const rows = Math.floor(canvas.height / CELL_SIZE);
     grid = Array.from({ length: rows }, () => 
         Array.from({ length: cols }, () => Math.random() < 0.3)
     );
 }
 
-// Get cell color based on neighbors and alive status
+/**
+ * @description Get cell color based on neighbors and alive status
+ * @param {number} neighbors - Number of alive neighbors
+ * @param {boolean} alive - Cell alive status
+ * @returns {string} Cell color
+ */
 function getCellColor(neighbors, alive) {
-    if (!alive) return colors.dead;
-    if (neighbors <= 1) return colors.level1;
-    if (neighbors === 2) return colors.level2;
-    if (neighbors === 3) return colors.level3;
-    return colors.level4;
+    if (!alive) return COLORS.DEAD;
+    if (neighbors <= 1) return COLORS.LEVEL1;
+    if (neighbors === 2) return COLORS.LEVEL2;
+    if (neighbors === 3) return COLORS.LEVEL3;
+    return COLORS.LEVEL4;
 }
 
-// Draw a single cell
+/**
+ * @description Draw a single cell
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {boolean} alive - Cell alive status
+ */
 function drawCell(x, y, alive) {
     const neighbors = countNeighbors(x, y);
     ctx.beginPath();
     ctx.roundRect(
-        x * cellSize, 
-        y * cellSize, 
-        cellSize - 1, 
-        cellSize - 1,
+        x * CELL_SIZE, 
+        y * CELL_SIZE, 
+        CELL_SIZE - 1, 
+        CELL_SIZE - 1,
         2
     );
     ctx.fillStyle = getCellColor(neighbors, alive);
     ctx.fill();
 }
 
-// Count the number of alive neighbors for a cell
+/**
+ * @description Count the number of alive neighbors for a cell
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @returns {number} Number of alive neighbors
+ */
 function countNeighbors(x, y) {
     let count = 0;
     for (let i = -1; i <= 1; i++) {
@@ -69,7 +88,9 @@ function countNeighbors(x, y) {
     return count;
 }
 
-// Update the grid based on the Game of Life rules
+/**
+ * @description Update the grid based on the Game of Life rules
+ */
 function updateGrid() {
     grid = grid.map((row, i) =>
         row.map((cell, j) => {
@@ -79,7 +100,9 @@ function updateGrid() {
     );
 }
 
-// Draw the entire grid
+/**
+ * @description Draw the entire grid
+ */
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     grid.forEach((row, i) =>
@@ -87,7 +110,10 @@ function draw() {
     );
 }
 
-// Main game loop
+/**
+ * @description Main game loop
+ * @param {DOMHighResTimeStamp} timestamp - Current timestamp
+ */
 function gameLoop(timestamp) {
     if (isRunning) {
         if (timestamp - lastUpdate >= 500) {  // 500ms = 0.5s
@@ -99,7 +125,9 @@ function gameLoop(timestamp) {
     }
 }
 
-// Toggle the game running state
+/**
+ * @description Toggle the game running state
+ */
 function toggleGame() {
     isRunning = !isRunning;
     if (isRunning) {
@@ -108,7 +136,9 @@ function toggleGame() {
     }
 }
 
-// Reset the game to the initial state
+/**
+ * @description Reset the game to the initial state
+ */
 function resetGame() {
     isRunning = false;
     initGrid();
