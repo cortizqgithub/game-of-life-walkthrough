@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Conway's Game of Life</title>
+    <title>GitHub-themed Game of Life</title>
     <style>
         body {
             margin: 0;
@@ -13,7 +13,7 @@
             min-height: 100vh;
         }
         canvas {
-            border: 1px solid #ccc;
+            border: 1px solid #eee;
         }
         .controls {
             position: fixed;
@@ -23,6 +23,11 @@
         button {
             padding: 5px 10px;
             margin-right: 5px;
+            background: #40c463;
+            border: none;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -39,6 +44,14 @@
         let isRunning = false;
         let grid = [];
         const cellSize = 10;
+        const colors = {
+            dead: '#ffffff',
+            level1: '#9be9a8',
+            level2: '#40c463',
+            level3: '#30a14e',
+            level4: '#216e39'
+        };
+        let lastUpdate = 0;
         
         function resizeCanvas() {
             canvas.width = window.innerWidth - 20;
@@ -54,7 +67,16 @@
             );
         }
 
+        function getCellColor(neighbors, alive) {
+            if (!alive) return colors.dead;
+            if (neighbors <= 1) return colors.level1;
+            if (neighbors === 2) return colors.level2;
+            if (neighbors === 3) return colors.level3;
+            return colors.level4;
+        }
+
         function drawCell(x, y, alive) {
+            const neighbors = countNeighbors(x, y);
             ctx.beginPath();
             ctx.roundRect(
                 x * cellSize, 
@@ -63,7 +85,7 @@
                 cellSize - 1,
                 2
             );
-            ctx.fillStyle = alive ? '#000' : '#fff';
+            ctx.fillStyle = getCellColor(neighbors, alive);
             ctx.fill();
         }
 
@@ -97,17 +119,23 @@
             );
         }
 
-        function gameLoop() {
+        function gameLoop(timestamp) {
             if (isRunning) {
-                updateGrid();
-                draw();
+                if (timestamp - lastUpdate >= 500) {  // 500ms = 0.5s
+                    updateGrid();
+                    draw();
+                    lastUpdate = timestamp;
+                }
                 requestAnimationFrame(gameLoop);
             }
         }
 
         function toggleGame() {
             isRunning = !isRunning;
-            if (isRunning) gameLoop();
+            if (isRunning) {
+                lastUpdate = performance.now();
+                gameLoop(lastUpdate);
+            }
         }
 
         function resetGame() {
