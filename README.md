@@ -1,3 +1,66 @@
+# Conway's Game of Life - GitHub Theme
+
+A modern implementation of Conway's Game of Life using HTML5 Canvas with a GitHub-inspired theme. This project serves as both a functional Game of Life simulation and a coding example for clean, maintainable web development.
+
+## 🎮 Live Demo
+
+Visit [GitHub Pages URL] to try it out!
+
+## 🌟 Features
+
+- GitHub contribution graph color scheme
+- Responsive canvas that adapts to window size
+- Simple controls for starting/stopping and resetting simulation
+- Toroidal grid implementation (edges wrap around)
+- Optimized rendering using HTML5 Canvas
+
+## 🛠️ Technology Stack
+
+- HTML5 Canvas for efficient rendering
+- Vanilla JavaScript with modern ES6+ features
+- CSS with custom properties for theming
+- No external dependencies
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/game-of-life-walkthrough.git
+   ```
+
+2. Open `index.html` in your browser
+
+3. Click "Start/Stop" to begin/pause the simulation
+
+## 🎯 Implementation Details
+
+The project follows best practices for modern web development:
+
+- Semantic HTML5 with proper accessibility attributes
+- CSS organization following ITCSS principles
+- Fully documented JavaScript with JSDoc comments
+- Consistent code style and naming conventions
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow the coding standards in `.github/copilot-instructions.md`
+4. Test your changes thoroughly
+5. Submit a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by GitHub's contribution graph
+- Based on Conway's Game of Life
+- Special thanks to all contributors
+
 # Build Conway's Game of Life with GitHub Copilot
 
 This repository contains a companion walkthrough to the video on
