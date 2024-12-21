@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+canvas {
+    border: 1px solid #eee;
+}
+.controls {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    background: #40c463;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
